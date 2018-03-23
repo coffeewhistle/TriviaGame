@@ -3,66 +3,58 @@ $(document).ready(function () {
     var timeRemaining = 20;
     var intervalId;
     var clockRunning = true;
-    var q1 = {
+    var questions = [{
         question: "The first question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer",
         correct: "The first answer"
-    };
-    var q2 = {
+    }, {
         question: "The second question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer"
-    };
-    var q3 = {
+    }, {
         question: "The third question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer"
-    };
-    var q4 = {
+    }, {
         question: "The fourth question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer"
-    };
-    var q5 = {
+    }, {
         question: "The fifth question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer"
-    };
-    var q6 = {
+    }, {
         question: "The sixth question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer"
-    };
-    var q7 = {
+    }, {
         question: "The seventh question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer"
-    };
-    var q8 = {
+    }, {
         question: "The eigth question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer"
-    };
+    }];
 
-    var questions = [q1, q2, q3, q4, q5, q6, q7, q8];
-    var currentQ = q1;
+    var currentQ = questions[0];
 
     // dynamically generate the gameboard
     var gameBoard = {
@@ -76,7 +68,7 @@ $(document).ready(function () {
         },
 
         question: function () {
-            currentQ = questions[0];
+            currentQ = questions[2];
         },
 
         display: function () {
@@ -89,13 +81,13 @@ $(document).ready(function () {
                 "<div id='a4'>" + currentQ.answer4 + "</div>");
         },
 
-        gameCheck: function() {
-            $(document).on("click", function() {
-                
+        gameCheck: function () {
+            $(document).on("click", function () {
+
             });
         },
     };
-gameBoard.timer();
+    gameBoard.timer();
     gameBoard.question();
     gameBoard.display();
 
