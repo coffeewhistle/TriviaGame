@@ -55,6 +55,7 @@ $(document).ready(function () {
     }];
 
     var currentQ = questions[0];
+    var questionArray = [];
 
     // dynamically generate the gameboard
     var gameBoard = {
@@ -68,7 +69,15 @@ $(document).ready(function () {
         },
 
         question: function () {
-            currentQ = questions[2];
+            for (i = 0; i < questionArray.length; i++) {
+                if (questionArray.indexOf(i) != -1) {
+                    var rand = Math.floor(Math.random() * 9) + 1 - 1;
+                    currentQ = questions[rand];
+                    questionArray.push(rand);
+                } else {
+                    $(".container").html("Game Over!");
+                }
+            }
         },
 
         display: function () {
