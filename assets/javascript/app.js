@@ -1,22 +1,19 @@
 $(document).ready(function () {
 
-    var timeRemaining = 20;
-    var intervalId;
-    var clockRunning = true;
     var questions = [{
         question: "The first question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer",
-        correct: a1
+        correct: "The first answer"
     }, {
         question: "The second question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer",
-        correct: a2
+        correct: "The third answer"
     }, {
         question: "The third question",
         answer1: "The first answer",
@@ -55,56 +52,95 @@ $(document).ready(function () {
         answer4: "The fourth answer"
     }];
 
-    var currentQ = questions[0];
-    var questionArray = [ ];
-    var rand ;
+    var timeRemaining = 20;
+    var intervalId;
+    var clockRunning = false;
+    var question = Math.floor(Math.random() * 8);
+    var questionsArr = [];
 
-    // dynamically generate the gameboard
-    var gameBoard = {
-        timeRemaining: 20,
-        timer: function () {
-            invervalId = setInterval(gameBoard.count, 1000);
-        },
+    $("#startButton").on("click", function () {
+        if (clockRunning == false) {
+            $("#time-remaining").text("Time Remaining: 20 seconds");
+            intervalId = setInterval(decrement, 1000);
+        }
+        clockRunning = true;
+        $("#startButton").hide();
+        game();
+    });
 
-        count: function () {
-            gameBoard.timeRemaining--;
-        },
+    function decrement() {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            console.log(timeRemaining);
+            $("#time-remaining").text("Time Remaining: " + timeRemaining + " seconds");
+        }
+    }
 
-        question: function () {
-                if (questionArray.length === 0) {
-                    rand = Math.floor(Math.random() * 9) + 1 - 1;
-                    currentQ = questions[rand];
-                    questionArray.push(rand);
-                    console.log(rand);
-                } else if (questionArray.indexOf(i) != -1) {
-                    rand = Math.floor(Math.random() * 9) + 1 - 1;
-                    currentQ = questions[rand];
-                    questionArray.push(rand);
-                    console.log(rand);
-                } else {
-                    $(".container").html("Game Over!");
-                }
-            },
+    function quizText() {
+        $("#question").html(questions[question].question);
+        $("#a1").html("<button>" + questions[question].answer1 + "</button>");
+        $("#a2").html("<button>" + questions[question].answer2 + "</button>");
+        $("#a3").html("<button>" + questions[question].answer3 + "</button>");
+        $("#a4").html("<button>" + questions[question].answer4 + "</button>");
+    }
 
-        display: function () {
-            $("#time-remaining").html("<p>Time Remaining: " + timeRemaining + " seconds</p>");
-            $("#question").html("<p>" + currentQ.question + "</p>");
-            $("#answers").html(
-                "<div id='a1'>" + currentQ.answer1 + "</div>" +
-                "<div id='a2'>" + currentQ.answer2 + "</div>" +
-                "<div id='a3'>" + currentQ.answer3 + "</div>" +
-                "<div id='a4'>" + currentQ.answer4 + "</div>");
-        },
+    function game() {
+        if (clockRunning == false) {
+            $("#time-remaining").text("Time Remaining: 20 seconds");
+            intervalId = setInterval(decrement, 1000);
+        }
+        
+        question = Math.floor(Math.random() * 8);
+        console.log(question);
+        quizText(question);
 
-        gameCheck: function () {
-            $(document).on("click", function () {
-                
-            });
-        },
-    };
-    gameBoard.timer();
-    gameBoard.question();
-    gameBoard.display();
+        $("button").on("click", function () {
+            if (this.innerHTML == questions[question].correct) {
+                console.log("Correct!");
+                timeRemaining = 20;
+                questionsArr.push(question);
+                clearInterval(intervalId);
+                clockRunning = false;
+                correct();
+                // question = Math.floor(Math.random() * 8);
+                game();
+
+
+            } else if (this.innerHTML !== questions[question].correct) {
+                console.log("Incorrect!");
+                timeRemaining = 20;
+                questionsArr.push(question);
+                clearInterval(intervalId);
+                clockRunning = false;
+                incorrect();
+                // question = Math.floor(Math.random() * 8);
+                game();
+            }
+        });
+    }
+
+    function correct() {
+        $("#right-wrong").show();
+        $("#right-wrong").html("<img src='assets/images/correct.gif' />");
+        // $.ajax({
+        //     url: "https://api.giphy.com/v1/gifs/random?api_key=5F3SaJqWiinKu8tAEiWD6P2Nu1scjWVa&tag=correct",
+        //     method: "GET"
+        // }).then(function (response) {
+        //     $("#game").html("<img src=" + response.data.image_original_url + "/>");
+        // });
+    }
+
+    function incorrect() {
+        $("#right-wrong").show();
+        $("#right-wrong").html("<img src='assets/images/incorrect.gif' />");
+        // $.ajax({
+        //     url: "https://api.giphy.com/v1/gifs/random?api_key=5F3SaJqWiinKu8tAEiWD6P2Nu1scjWVa&tag=incorrect",
+        //     method: "GET"
+        // }).then(function (response) {
+        //     console.log(response);
+        //     $("#game").html("<img src=" + response.data.image_original_url + "/>");
+        // });
+    }
 
 
     // set the timer to 20 seconds
