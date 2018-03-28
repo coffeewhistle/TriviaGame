@@ -9,13 +9,14 @@ $(document).ready(function () {
         answer2: "The second answer",
         answer3: "The third answer",
         answer4: "The fourth answer",
-        correct: "The first answer"
+        correct: a1
     }, {
         question: "The second question",
         answer1: "The first answer",
         answer2: "The second answer",
         answer3: "The third answer",
-        answer4: "The fourth answer"
+        answer4: "The fourth answer",
+        correct: a2
     }, {
         question: "The third question",
         answer1: "The first answer",
@@ -55,7 +56,8 @@ $(document).ready(function () {
     }];
 
     var currentQ = questions[0];
-    var questionArray = [];
+    var questionArray = [ ];
+    var rand ;
 
     // dynamically generate the gameboard
     var gameBoard = {
@@ -69,16 +71,20 @@ $(document).ready(function () {
         },
 
         question: function () {
-            for (i = 0; i < questionArray.length; i++) {
-                if (questionArray.indexOf(i) != -1) {
-                    var rand = Math.floor(Math.random() * 9) + 1 - 1;
+                if (questionArray.length === 0) {
+                    rand = Math.floor(Math.random() * 9) + 1 - 1;
                     currentQ = questions[rand];
                     questionArray.push(rand);
+                    console.log(rand);
+                } else if (questionArray.indexOf(i) != -1) {
+                    rand = Math.floor(Math.random() * 9) + 1 - 1;
+                    currentQ = questions[rand];
+                    questionArray.push(rand);
+                    console.log(rand);
                 } else {
                     $(".container").html("Game Over!");
                 }
-            }
-        },
+            },
 
         display: function () {
             $("#time-remaining").html("<p>Time Remaining: " + timeRemaining + " seconds</p>");
@@ -92,7 +98,7 @@ $(document).ready(function () {
 
         gameCheck: function () {
             $(document).on("click", function () {
-
+                
             });
         },
     };
