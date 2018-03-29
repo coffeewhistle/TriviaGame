@@ -1,55 +1,61 @@
 $(document).ready(function () {
 
     var questions = [{
-        question: "The first question",
-        answer1: "The first answer",
-        answer2: "The second answer",
-        answer3: "The third answer",
-        answer4: "The fourth answer",
+        question: "What was the first console video game that allowed the game to be saved?",
+        answer1: "Super Smash Bros.",
+        answer2: "Dig Dug",
+        answer3: "The Legend of Zelda",
+        answer4: "Diddy Kong Racing",
+        correct: "The Legend of Zelda"
+    }, {
+        question: "What does the acronym USB stand for when referring to a computer port?",
+        answer1: "Universal Serial Bus",
+        answer2: "Universal Cereal Bust",
+        answer3: "Universe of Sensory or Bust",
+        answer4: "United States or Bust",
+        correct: "Universal Serial Bus"
+    }, {
+        question: "When referring to a computer monitor, what does the acronym LCD stand for?",
+        answer1: "Like, crystals dawd",
+        answer2: "Liquid Crystal Drank",
+        answer3: "Liquid Crystal Display",
+        answer4: "Lemme Cut Dat",
+        correct: "Liquid Crystal Display"
+    }, {
+        question: "Nintendo is a consumer electronics and video game company founded in what country?",
+        answer1: "Nintendoland",
+        answer2: "Japanville",
+        answer3: "Mushroom Kingdom",
+        answer4: "Japan",
+        correct: "Japan"
+    }, {
+        question: "The first person shooter video game Doom was first released in what year?",
+        answer1: "1993",
+        answer2: "1963",
+        answer3: "1923",
+        answer4: "1903",
+        correct: "1993"
+    }, {
+        question: "In a website browser address bar what does 'www' stand for?",
+        answer1: "Wow, Whatta World!",
+        answer2: "World's Widest Web",
+        answer3: "World Wide Web",
+        answer4: "Wild Willy's Webers",
+        correct: "World Wide Web"
+    }, {
+        question: "In database programming, SQL is an acronym for what?",
+        answer1: "Scheduled Question Language",
+        answer2: "Structured Query Language",
+        answer3: "Search Query Listen",
+        answer4: "Si, Que Lingua?",
         correct: "The first answer"
     }, {
-        question: "The second question",
-        answer1: "The first answer",
-        answer2: "The second answer",
-        answer3: "The third answer",
-        answer4: "The fourth answer",
-        correct: "The third answer"
-    }, {
-        question: "The third question",
-        answer1: "The first answer",
-        answer2: "The second answer",
-        answer3: "The third answer",
-        answer4: "The fourth answer"
-    }, {
-        question: "The fourth question",
-        answer1: "The first answer",
-        answer2: "The second answer",
-        answer3: "The third answer",
-        answer4: "The fourth answer"
-    }, {
-        question: "The fifth question",
-        answer1: "The first answer",
-        answer2: "The second answer",
-        answer3: "The third answer",
-        answer4: "The fourth answer"
-    }, {
-        question: "The sixth question",
-        answer1: "The first answer",
-        answer2: "The second answer",
-        answer3: "The third answer",
-        answer4: "The fourth answer"
-    }, {
-        question: "The seventh question",
-        answer1: "The first answer",
-        answer2: "The second answer",
-        answer3: "The third answer",
-        answer4: "The fourth answer"
-    }, {
-        question: "The eigth question",
-        answer1: "The first answer",
-        answer2: "The second answer",
-        answer3: "The third answer",
-        answer4: "The fourth answer"
+        question: "What is the name of the main protagonist in the Legend of Zelda series of video games?",
+        answer1: "Her Royal Highness, Zelda",
+        answer2: "Madam Zelda",
+        answer3: "Link",
+        answer4: "Princess Zelda",
+        correct: "Link"
     }];
 
     var timeRemaining = 20;
@@ -57,6 +63,7 @@ $(document).ready(function () {
     var clockRunning = false;
     var question = Math.floor(Math.random() * 8);
     var questionsArr = [];
+    var count = 0;
 
     $("#startButton").on("click", function () {
         if (clockRunning == false) {
@@ -104,8 +111,8 @@ $(document).ready(function () {
                 correct();
                 // question = Math.floor(Math.random() * 8);
                 game();
-
-
+                count++;
+                console.log(count);
             } else if (this.innerHTML !== questions[question].correct) {
                 console.log("Incorrect!");
                 timeRemaining = 20;
@@ -115,8 +122,14 @@ $(document).ready(function () {
                 incorrect();
                 // question = Math.floor(Math.random() * 8);
                 game();
+                count++;
+                console.log(count);
             }
         });
+    }
+
+    if (count == 8) {
+        $("#game").html("GAME OVER!");
     }
 
     function correct() {
