@@ -48,7 +48,7 @@ $(document).ready(function () {
         answer2: "Structured Query Language",
         answer3: "Search Query Listen",
         answer4: "Si, Que Lingua?",
-        correct: "The first answer"
+        correct: "Structured Query Language"
     }, {
         question: "What is the name of the main protagonist in the Legend of Zelda series of video games?",
         answer1: "Her Royal Highness, Zelda",
@@ -58,16 +58,18 @@ $(document).ready(function () {
         correct: "Link"
     }];
 
-    var timeRemaining = 20;
+    var timeRemaining = 10;
     var intervalId;
     var clockRunning = false;
     var question = Math.floor(Math.random() * 8);
     var questionsArr = [];
     var count = 0;
+    var correctCount = 0;
+    var incorrectCount = 0;
 
     $("#startButton").on("click", function () {
         if (clockRunning == false) {
-            $("#time-remaining").text("Time Remaining: 20 seconds");
+            $("#time-remaining").html("<h2>Time Remaining: 10 seconds</h2>");
             intervalId = setInterval(decrement, 1000);
         }
         clockRunning = true;
@@ -79,12 +81,12 @@ $(document).ready(function () {
         if (timeRemaining > 0) {
             timeRemaining--;
             console.log(timeRemaining);
-            $("#time-remaining").text("Time Remaining: " + timeRemaining + " seconds");
+            $("#time-remaining").html("<h2>Time Remaining: " + timeRemaining + " seconds</h2>");
         }
     }
 
     function quizText() {
-        $("#question").html(questions[question].question);
+        $("#question").html("<h3>"+questions[question].question+"</h3>");
         $("#a1").html("<button>" + questions[question].answer1 + "</button>");
         $("#a2").html("<button>" + questions[question].answer2 + "</button>");
         $("#a3").html("<button>" + questions[question].answer3 + "</button>");
@@ -93,7 +95,7 @@ $(document).ready(function () {
 
     function game() {
         if (clockRunning == false) {
-            $("#time-remaining").text("Time Remaining: 20 seconds");
+            $("#time-remaining").html("<h2>Time Remaining: 10 seconds</h2>");
             intervalId = setInterval(decrement, 1000);
         }
         
@@ -102,9 +104,9 @@ $(document).ready(function () {
         quizText(question);
 
         $("button").on("click", function () {
-            if (this.innerHTML == questions[question].correct) {
+            if (this.html == questions[question].correct && count < 7) {
                 console.log("Correct!");
-                timeRemaining = 20;
+                timeRemaining = 10;
                 questionsArr.push(question);
                 clearInterval(intervalId);
                 clockRunning = false;
@@ -112,10 +114,11 @@ $(document).ready(function () {
                 // question = Math.floor(Math.random() * 8);
                 game();
                 count++;
+                correctCount++;
                 console.log(count);
-            } else if (this.innerHTML !== questions[question].correct) {
+            } else if (this.innerHTML !== questions[question].correct && count < 7) {
                 console.log("Incorrect!");
-                timeRemaining = 20;
+                timeRemaining = 10;
                 questionsArr.push(question);
                 clearInterval(intervalId);
                 clockRunning = false;
@@ -123,7 +126,14 @@ $(document).ready(function () {
                 // question = Math.floor(Math.random() * 8);
                 game();
                 count++;
+                incorrectCount++;
                 console.log(count);
+            } else {
+                var gameHtml = 
+                    "<div><h1>GAME OVER!</h1></div>" +
+                    "<div><h2>Correct: " + correctCount + "</h2></div>" +
+                    "<div><h2>Incorrect: " + incorrectCount +"</h2></div>";
+                $("#game").html(gameHtml);
             }
         });
     }
